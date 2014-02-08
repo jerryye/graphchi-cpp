@@ -65,7 +65,10 @@ namespace graphchi {
         shard_index(vid_t vertexid, size_t filepos, size_t edgecounter) : vertexid(vertexid), filepos(filepos), edgecounter(edgecounter) {}
     };
     
-
+    struct weighted_data {
+        float weight;
+        float data;
+    };
 }
 
 

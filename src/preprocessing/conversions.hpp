@@ -88,6 +88,10 @@ namespace graphchi {
     
     static void parse(dummy &x, const char *s) {}
     
+    static void parse(weighted_data &x, const char * s) {
+        x.weight = atof(s);
+        x.data = 0.0;
+    }
     
     /**
      * Special templated parser for PairContainers.
