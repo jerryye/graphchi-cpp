@@ -40,7 +40,7 @@
 using namespace graphchi;
  
 #define THRESHOLD 1e-1    
-#define RANDOMRESETPROB 0.0
+float RANDOMRESETPROB = 0.2;
 
 typedef float VertexDataType;
 typedef struct weighted_data EdgeDataType;
@@ -140,6 +140,7 @@ int main(int argc, const char ** argv) {
     int niters              = get_option_int("niters", 4);
     bool scheduler          = false;                    // Non-dynamic version of pagerank.
     int ntop                = get_option_int("top", 20);
+    RANDOMRESETPROB         = get_option_float("reset", 0);
     
     /* Process input file - if not already preprocessed */
     int nshards             = convert_if_notexists<EdgeDataType>(filename, get_option_string("nshards", "auto"));
