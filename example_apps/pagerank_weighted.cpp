@@ -72,24 +72,24 @@ struct PagerankProgram : public GraphChiProgram<VertexDataType, EdgeDataType> {
       * second item by eacg edge's weight
       */
     void update_edge_data(graphchi_vertex<VertexDataType, EdgeDataType> &v, float quota){
-	float sum = 0.0;
+	    float sum = 0.0;
         for(int i=0; i < v.num_outedges(); i++) {
             graphchi_edge<EdgeDataType> * edge = v.outedge(i);
-	    //We sum the weight values for each outgoing edges.
-	    EdgeDataType val = edge->get_data();
-	    sum += val.weight;
+	        //We sum the weight values for each outgoing edges.
+	        EdgeDataType val = edge->get_data();
+	        sum += val.weight;
         }
 	
         for(int i=0; i < v.num_outedges(); i++) {
             graphchi_edge<EdgeDataType> * edge = v.outedge(i);
-	    EdgeDataType val = edge->get_data();
-	    val.data= quota * val.weight / sum;
-	    edge->set_data(val);
+            EdgeDataType val = edge->get_data();
+            val.data= quota * val.weight / sum;
+            edge->set_data(val);
 #ifdef LOGOUTPUT
-	    if (v.id() == 1)
-    	        std::cout <<  v.id() << " -> " << edge->vertex_id() << " with data: " << val.data<< " with weight " << val.weight << std::endl;
-#endif
-         }
+            if (v.id() == 1)
+                std::cout <<  v.id() << " -> " << edge->vertex_id() << " with data: " << val.data<< " with weight " << val.weight << std::endl;
+    #endif
+             }
     }
 
 
@@ -103,14 +103,14 @@ struct PagerankProgram : public GraphChiProgram<VertexDataType, EdgeDataType> {
                The initialization is important,
                because on every run, GraphChi will modify the data in the edges on disk. 
              */
-	    update_edge_data(v, 1.0);
+	        update_edge_data(v, 1.0);
             v.set_data(RANDOMRESETPROB); 
         } else {
             /* Compute the sum of neighbors' weighted pageranks by
                reading from the in-edges. */
             for(int i=0; i < v.num_inedges(); i++) {
-		EdgeDataType val= v.inedge(i)->get_data();
-		sum += val.data;
+		        EdgeDataType val= v.inedge(i)->get_data();
+		        sum += val.data;
             }
             
             /* Compute my pagerank */
@@ -118,7 +118,7 @@ struct PagerankProgram : public GraphChiProgram<VertexDataType, EdgeDataType> {
             
             /* Write my pagerank weighted by the weight of out-edges to
                each of my out-edges. */
-	    update_edge_data(v, pagerank);
+	        update_edge_data(v, pagerank);
                 
             /* Keep track of the progression of the computation.
                GraphChi engine writes a file filename.deltalog. */
@@ -140,7 +140,7 @@ int main(int argc, const char ** argv) {
     int niters              = get_option_int("niters", 4);
     bool scheduler          = false;                    // Non-dynamic version of pagerank.
     int ntop                = get_option_int("top", 20);
-    RANDOMRESETPROB         = get_option_float("reset", 0);
+    RANDOMRESETPROB         = get_option_float("reset", RANDOMRESETPROB);
     
     /* Process input file - if not already preprocessed */
     int nshards             = convert_if_notexists<EdgeDataType>(filename, get_option_string("nshards", "auto"));
